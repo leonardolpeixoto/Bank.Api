@@ -19,7 +19,13 @@ namespace Bank.Api.Repositories
 
         public async Task<Account> Find(long accountNumber)
         {
-            return await _context.Accounts.FindAsync(accountNumber);
+            var account = await _context.Accounts.FindAsync(accountNumber);
+
+            if (account == null) {
+                throw new AccountNotFoundException(accountNumber);
+            }
+
+            return account;
         }
 
         public async Task Create(Account account)

@@ -25,13 +25,7 @@ namespace Bank.Api.Controllers
         [HttpGet("{accountNumber}")]
         public async Task<ActionResult<Account>> GetAccount(long accountNumber) 
         {
-            var account = await _repository.Find(accountNumber);
-
-            if (account == null) {
-                return NotFound();
-            }
-
-            return account;
+            return await _repository.Find(accountNumber);
         }
     }
 }
