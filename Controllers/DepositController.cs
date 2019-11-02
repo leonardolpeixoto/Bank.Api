@@ -1,3 +1,5 @@
+using Bank.Api.Models.Operations;
+using Bank.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.Api.Controllers
@@ -5,10 +7,16 @@ namespace Bank.Api.Controllers
     [Route("api/account/deposit")]
     public class DepositController : Controller
     {
-        [HttpGet]
-        public string Deposit()
+        private readonly OperationService _service;
+        public DepositController(OperationService service)
         {
-            return "deposito";
+            _service = service;
+        }
+
+        [HttpPut]
+        public DepositOperation Deposit([FromBody]DepositOperation deposit)
+        {
+            return (DepositOperation) _service.Exec(deposit);
         }
     }
 }

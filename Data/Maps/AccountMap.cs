@@ -11,6 +11,8 @@ namespace Bank.Api.Data.Maps
             builder.ToTable("account");
             builder.HasKey(account => account.AccountNumber);
             builder.Property(account => account.Balance).IsRequired().HasColumnType("money");
+            builder.HasMany(account => account.Operations)
+                .WithOne(opperation => opperation.Account);
         }
     }
 }

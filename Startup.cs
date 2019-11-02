@@ -8,6 +8,7 @@ using Bank.Api.Models.Validators;
 using Bank.Api.Repositories;
 using Bank.Api.Middlewares;
 using Microsoft.OpenApi.Models;
+using Bank.Api.Services;
 
 namespace Bank.Api
 {
@@ -27,6 +28,8 @@ namespace Bank.Api
             services.AddDbContext<StoreDataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<AccountRepository, AccountRepository>();
             services.AddTransient<AccountValidator, AccountValidator>();
+            services.AddTransient<OperationService, OperationService>();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bank.Api", Version = "v1" });

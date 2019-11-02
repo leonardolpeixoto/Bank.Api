@@ -4,14 +4,16 @@ using Bank.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bank.Api.Migrations
 {
     [DbContext(typeof(StoreDataContext))]
-    partial class StoreDataContextModelSnapshot : ModelSnapshot
+    [Migration("20191102213509_operations")]
+    partial class operations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,8 +54,10 @@ namespace Bank.Api.Migrations
                         .HasMaxLength(255);
 
                     b.Property<string>("OperationType")
-                        .IsRequired()
                         .HasMaxLength(200);
+
+                    b.Property<string>("OperationsType")
+                        .IsRequired();
 
                     b.Property<decimal>("Rate")
                         .HasColumnType("money");
@@ -64,7 +68,7 @@ namespace Bank.Api.Migrations
 
                     b.ToTable("operation");
 
-                    b.HasDiscriminator<string>("OperationType").HasValue("AbstractOperation");
+                    b.HasDiscriminator<string>("OperationsType").HasValue("AbstractOperation");
                 });
 
             modelBuilder.Entity("Bank.Api.Models.Operations.DepositOperation", b =>
