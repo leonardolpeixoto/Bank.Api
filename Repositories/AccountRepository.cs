@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Bank.Api.Data;
 using Bank.Api.Exceptions;

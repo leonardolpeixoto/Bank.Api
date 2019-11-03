@@ -16,19 +16,15 @@ namespace Bank.Api.Controllers
             _repository = repository;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AbstractOperation>> Get(long id)
-        {
-            return await _operationRepository.Find(id);
-        }
-
         [HttpPost]
-        public async Task<ActionResult<AbstractOperation>> Daft([FromBody]DraftOperation draft)
+        public async Task Daft([FromBody]DraftOperation operation)
         {
-            await _repository.Decrement(draft.AccountNumber, draft.Amount);
-            await _repository.Decrement(draft.AccountNumber, draft.Rate);
+            await _repository.Decrement(operation.AccountNumber, operation.Amount);
+            await _repository.Decrement(operation.AccountNumber, operation.Rate);
 
-            return await _operationRepository.Register(draft);
+            await _operationRepository.Register(operation);
+
+            Ok();
         }
     }
 }

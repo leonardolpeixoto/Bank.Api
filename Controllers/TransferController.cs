@@ -16,15 +16,16 @@ namespace Bank.Api.Controllers
             _repository = repository;
         }
 
-        [HttpPut]
-        public async Task<ActionResult<AbstractOperation>> Daft([FromBody]TransferOperation transfer)
+        [HttpPost]
+        public async Task Transfer([FromBody]TransferOperation operation)
         {
-            await _repository.Decrement(transfer.AccountNumber, transfer.Amount);
-            await _repository.Decrement(transfer.AccountNumber, transfer.Rate);
+            await _repository.Decrement(operation.AccountNumber, operation.Amount);
+            await _repository.Decrement(operation.AccountNumber, operation.Rate);
 
-            await _repository.Increment(transfer.AccountToNumber, transfer.Amount);
+            await _repository.Increment(operation.AccountToNumber, operation.Amount);
 
-            return await _operationRepository.Register(transfer);
+            await _operationRepository.Register(operation);
+            Ok();
         }
     }
 }
