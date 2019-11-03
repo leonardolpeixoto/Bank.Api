@@ -1,16 +1,25 @@
 version: "3"
 
 services:
-  stone.api:
-    build:
-      context: .
-    ports:
-      - 8001:80
-  stone.db:
+  db:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: db
     environment:
       - SA_PASSWORD=${DB_PASSWORD}
       - ACCEPT_EULA=Y
       - MSSQL_PID=Express
     ports:
       - 1433:1433
+    networks: 
+      - api
+  stone.api:
+    build:
+      context: .
+    ports:
+      - 8000:5000
+    depends_on: 
+      - db
+    networks: 
+      - api
+networks:
+  api: 

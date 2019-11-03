@@ -1,19 +1,11 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
 
 WORKDIR /app
-
-COPY *.csproj .
-
-RUN dotnet restore
 
 COPY . .
 
-RUN dotnet publish -c Release -o out
+RUN dotnet restore
+RUN dotnet build
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
-
-WORKDIR /app
-
-COPY --from=build-env /app/out .
-
-ENTRYPOINT ["dotnet", "Bank.Api.dll"]
+EXPOSE 80
+ENTRYPOINT [ "./entrypoint.sh" ]
