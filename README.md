@@ -1,10 +1,10 @@
 # Bank.Api
 
 Api para a realização de operações bancárias tais como:
-    - Saque
-    - Depósito
-    - Transferência
-    - Extrato
+* Saque
+* Depósito
+* Transferência
+* Extrato
 
 ## Sobre o projeto
 
