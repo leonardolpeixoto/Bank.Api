@@ -4,14 +4,9 @@ namespace Bank.Api.Models.Operations
 {
     public abstract class AbstractOperation
     {
-        public AbstractOperation()
-        {
-            CalculateRate();
-            SetDescription();
-        }
         public long Id { get; set; }
-        public Account Account { get; set; }
         public long AccountNumber { get; set; }
+        public Account Account { get; set; }
         public string Description { get; set; }
         public string OperationType { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;

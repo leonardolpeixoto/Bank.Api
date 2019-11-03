@@ -2,7 +2,8 @@ namespace Bank.Api.Models.Operations
 {
     public class DepositOperation : AbstractOperation
     {
-        public  override void SetDescription() {
+        public override void SetDescription()
+        {
             Description = "Depósito";
         }
 
@@ -10,6 +11,5 @@ namespace Bank.Api.Models.Operations
         {
             Rate = Amount * (decimal)0.01;
         }
-
     }
 }

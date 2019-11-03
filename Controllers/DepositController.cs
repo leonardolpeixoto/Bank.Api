@@ -16,13 +16,15 @@ namespace Bank.Api.Controllers
             _repository = repository;
         }
 
-        [HttpPut]
-        public async Task<ActionResult<AbstractOperation>> Deposit([FromBody]DepositOperation deposit)
+        [HttpPost]
+        public async Task Deposit([FromBody]DepositOperation operation)
         {
-            await _repository.Increment(deposit.AccountNumber, deposit.Amount);
-            await _repository.Decrement(deposit.AccountNumber, deposit.Rate);
+            await _repository.Increment(operation.AccountNumber, operation.Amount);
+            await _repository.Decrement(operation.AccountNumber, operation.Rate);
 
-            return await _operationRepository.Register(deposit);
+            await _operationRepository.Register(operation);
+
+            Ok();
         }
     }
 }

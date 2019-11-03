@@ -14,7 +14,7 @@ namespace Bank.Api.Models
 
         public void ValidateAmount(decimal amount)
         {
-            if (amount <= 0)
+            if (amount < 0)
             {
                 throw new ValidateException("Amount deve ser maior que zero");
             }

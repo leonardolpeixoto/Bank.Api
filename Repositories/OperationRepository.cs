@@ -24,12 +24,13 @@ namespace Bank.Api.Repositories
 
             return operation;
         }
-
-        public async Task<AbstractOperation> Register(AbstractOperation operation)
+        public async Task Register(AbstractOperation operation)
         {
-            // _context.AbstractOperation.Add(operation);
-            // await _context.SaveChangesAsync();
-            return operation;
+            operation.SetDescription();
+            operation.CalculateRate();
+
+            _context.AbstractOperation.Add(operation);
+            await _context.SaveChangesAsync();
         }
     }
 }
