@@ -4,14 +4,16 @@ using Bank.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bank.Api.Migrations
 {
     [DbContext(typeof(StoreDataContext))]
-    partial class StoreDataContextModelSnapshot : ModelSnapshot
+    [Migration("20191103110109_operations_transfer_deposit")]
+    partial class operations_transfer_deposit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,6 +43,10 @@ namespace Bank.Api.Migrations
 
                     b.Property<long>("AccountNumber");
 
+                    b.Property<long>("AccountNumberTo");
+
+                    b.Property<long?>("AccountToAccountNumber");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
@@ -61,6 +67,8 @@ namespace Bank.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountNumber");
+
+                    b.HasIndex("AccountToAccountNumber");
 
                     b.ToTable("operation");
 
@@ -96,6 +104,10 @@ namespace Bank.Api.Migrations
                         .WithMany("Operations")
                         .HasForeignKey("AccountNumber")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Bank.Api.Models.Account", "AccountTo")
+                        .WithMany()
+                        .HasForeignKey("AccountToAccountNumber");
                 });
 #pragma warning restore 612, 618
         }

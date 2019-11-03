@@ -1,5 +1,6 @@
+using System.Threading.Tasks;
 using Bank.Api.Models.Operations;
-using Bank.Api.Services;
+using Bank.Api.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.Api.Controllers
@@ -7,16 +8,21 @@ namespace Bank.Api.Controllers
     [Route("api/account/deposit")]
     public class DepositController : Controller
     {
-        private readonly OperationService _service;
-        public DepositController(OperationService service)
+        private readonly OperationRepository _operationRepository;
+        private readonly AccountRepository _repository;
+        public DepositController(OperationRepository operationRepository, AccountRepository repository)
         {
-            _service = service;
+            _operationRepository = operationRepository;
+            _repository = repository;
         }
 
         [HttpPut]
-        public DepositOperation Deposit([FromBody]DepositOperation deposit)
+        public async Task<ActionResult<AbstractOperation>> Deposit([FromBody]DepositOperation deposit)
         {
-            return (DepositOperation) _service.Exec(deposit);
+            await _repository.Increment(deposit.AccountNumber, deposit.Amount);
+            await _repository.Decrement(deposit.AccountNumber, deposit.Rate);
+
+            return await _operationRepository.Register(deposit);
         }
     }
 }

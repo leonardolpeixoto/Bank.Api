@@ -8,11 +8,14 @@ namespace Bank.Api.Data
     public class StoreDataContext : DbContext
     {
         public StoreDataContext(DbContextOptions<StoreDataContext> options) : base(options)
-        {}
+        { }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<AbstractOperation> AbstractOperation { get; set; }
         public DbSet<DepositOperation> DepositOperation { get; set; }
+        public DbSet<DraftOperation> DraftOperation { get; set; }
+        public DbSet<TransferOperation> TransferOperation { get; set; }
 
-        protected override void  OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AccountMap());
             builder.ApplyConfiguration(new AbstractOperationMap());

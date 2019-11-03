@@ -25,7 +25,8 @@ namespace Bank.Api.Data.Maps
             builder.Property(operation => operation.Date).IsRequired().HasColumnType("datetime");
             
             builder.HasOne(operation => operation.Account)
-                .WithMany(account => account.Operations);
+                .WithMany(account => account.Operations)
+                .HasForeignKey(operation => operation.AccountNumber);         
         }
     }
 }

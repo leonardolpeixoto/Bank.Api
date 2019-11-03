@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using Bank.Api.Exceptions;
 using Bank.Api.Models.Operations;
 
 namespace Bank.Api.Models
@@ -12,14 +12,25 @@ namespace Bank.Api.Models
 
         public List<AbstractOperation> Operations { get; set; }
 
-         public void Increment(decimal value)
+        public void ValidateAmount(decimal amount)
         {
-            Balance += Math.Abs(value);
+            if (amount <= 0)
+            {
+                throw new ValidateException("Amount deve ser maior que zero");
+            }
+        }
+        public void Increment(decimal amount)
+        {
+            ValidateAmount(amount);
+
+            Balance += amount;
         }
 
-        public void Decrement(decimal value)
+        public void Decrement(decimal amount)
         {
-            Balance -= Math.Abs(value);
+            ValidateAmount(amount);
+
+            Balance -= amount;
         }
     }
 }

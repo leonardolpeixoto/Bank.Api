@@ -4,6 +4,5 @@ namespace Bank.Api.Exceptions
     {
         public AccountNotFoundException(long accontNumber) : base($"A conta {accontNumber} não existe.")
         { }
-
     }
 }
